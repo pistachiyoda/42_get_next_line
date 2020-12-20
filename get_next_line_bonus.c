@@ -6,7 +6,7 @@
 /*   By: fmai <fmai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 00:54:36 by fmai              #+#    #+#             */
-/*   Updated: 2020/12/20 19:28:42 by fmai             ###   ########.fr       */
+/*   Updated: 2020/12/20 19:50:14 by fmai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int			handle_save(char **save, int fd, char **line)
 	}
 	*line = ft_strdup(save[fd]);
 	free(save[fd]);
-	save[fd] = ft_strdup("");
+	save[fd] = NULL;
 	return (0);
 }
 
