@@ -6,7 +6,7 @@
 /*   By: fmai <fmai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 00:54:36 by fmai              #+#    #+#             */
-/*   Updated: 2020/12/20 19:50:14 by fmai             ###   ########.fr       */
+/*   Updated: 2020/12/21 01:48:08 by fmai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ int			handle_save(char **save, int fd, char **line)
 	return (0);
 }
 
+void		free_all(char *buf, char *save)
+{
+	free(buf);
+	free(save);
+}
+
 int			get_next_line(int fd, char **line)
 {
 	int				buf_cnt;
@@ -79,14 +85,16 @@ int			get_next_line(int fd, char **line)
 	static char		*save[256];
 	char			*tmp;
 
-	if (BUFFER_SIZE < 0
-	|| !(buf = (char *)malloc(sizeof(char) * BUFFER_SIZE))
-	|| fd < 0 || fd >= 256)
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= 256
+	|| !(buf = (char *)malloc(sizeof(char) * BUFFER_SIZE)))
 		return (-1);
 	while ((buf_cnt = read(fd, buf, BUFFER_SIZE)))
 	{
 		if (buf_cnt == -1)
+		{
+			free_all(buf, save[fd]);
 			return (-1);
+		}
 		if (!save[fd])
 			save[fd] = ft_strdup("");
 		tmp = ft_strnjoin(save[fd], buf, buf_cnt);

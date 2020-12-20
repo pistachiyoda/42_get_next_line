@@ -6,7 +6,7 @@
 /*   By: fmai <fmai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 00:55:45 by fmai              #+#    #+#             */
-/*   Updated: 2020/12/20 13:04:43 by fmai             ###   ########.fr       */
+/*   Updated: 2020/12/21 01:45:46 by fmai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 
 int			make_line(char **save, int fd, char **line, int index);
 int			make_save(char **save, int fd, int index);
+int			handle_save(char **save, int fd, char **line);
 int			get_next_line(int fd, char **line);
+void		free_all(char *buf, char *save);
 size_t		ft_strlen(char *str);
 char		*ft_strdup(char *src);
 char		*ft_strnjoin(char *s1, char const *s2, int n);
