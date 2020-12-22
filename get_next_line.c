@@ -6,7 +6,7 @@
 /*   By: fmai <fmai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 00:54:36 by fmai              #+#    #+#             */
-/*   Updated: 2020/12/22 12:40:15 by fmai             ###   ########.fr       */
+/*   Updated: 2020/12/22 12:55:28 by fmai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int			handle_save(char **save, int fd, char **line)
 	if ((i = newline_index(save[fd])) != -1)
 	{
 		if (!make_line(save, fd, line, i))
-			return (handle_error(NULL, save[fd])); 
+			return (handle_error(NULL, save[fd]));
 		if (!make_save(save, fd, i))
-			return (handle_error(NULL, save[fd])); 
+			return (handle_error(NULL, save[fd]));
 		return (1);
 	}
 	if (!(*line = ft_strdup(save[fd])))
@@ -99,7 +99,7 @@ int			get_next_line(int fd, char **line)
 			if (!(save[fd] = ft_strdup("")))
 				return (handle_error(buf, NULL));
 		if (!(tmp = ft_strnjoin(save[fd], buf, buf_cnt)))
-			return (handle_error(buf, save[fd])); 
+			return (handle_error(buf, save[fd]));
 		free(save[fd]);
 		save[fd] = tmp;
 		if (newline_index(save[fd]) != -1)
