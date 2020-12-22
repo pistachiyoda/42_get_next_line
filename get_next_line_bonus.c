@@ -6,7 +6,7 @@
 /*   By: fmai <fmai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 00:54:36 by fmai              #+#    #+#             */
-/*   Updated: 2020/12/22 12:55:39 by fmai             ###   ########.fr       */
+/*   Updated: 2020/12/23 00:04:13 by fmai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int			get_next_line(int fd, char **line)
 	{
 		if (buf_cnt == -1)
 			return (handle_error(buf, save[fd]));
+		*line = ft_strdup("");
 		if (!save[fd])
 			if (!(save[fd] = ft_strdup("")))
 				return (handle_error(buf, NULL));
