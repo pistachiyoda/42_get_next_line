@@ -6,7 +6,7 @@
 /*   By: fmai <fmai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 00:54:36 by fmai              #+#    #+#             */
-/*   Updated: 2020/12/21 01:44:31 by fmai             ###   ########.fr       */
+/*   Updated: 2020/12/22 12:40:15 by fmai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,27 +55,30 @@ int			handle_save(char **save, int fd, char **line)
 
 	if (!save[fd])
 	{
-		*line = ft_strdup("");
+		if (!(*line = ft_strdup("")))
+			return (handle_error(NULL, NULL));
 		return (0);
 	}
 	if ((i = newline_index(save[fd])) != -1)
 	{
 		if (!make_line(save, fd, line, i))
-			return (-1);
+			return (handle_error(NULL, save[fd])); 
 		if (!make_save(save, fd, i))
-			return (-1);
+			return (handle_error(NULL, save[fd])); 
 		return (1);
 	}
-	*line = ft_strdup(save[fd]);
+	if (!(*line = ft_strdup(save[fd])))
+		return (handle_error(NULL, save[fd]));
 	free(save[fd]);
 	save[fd] = NULL;
 	return (0);
 }
 
-void		free_all(char *buf, char *save)
+int			handle_error(char *buf, char *save)
 {
 	free(buf);
 	free(save);
+	return (-1);
 }
 
 int			get_next_line(int fd, char **line)
@@ -91,13 +94,12 @@ int			get_next_line(int fd, char **line)
 	while ((buf_cnt = read(fd, buf, BUFFER_SIZE)))
 	{
 		if (buf_cnt == -1)
-		{
-			free_all(buf, save[fd]);
-			return (-1);
-		}
+			return (handle_error(buf, save[fd]));
 		if (!save[fd])
-			save[fd] = ft_strdup("");
-		tmp = ft_strnjoin(save[fd], buf, buf_cnt);
+			if (!(save[fd] = ft_strdup("")))
+				return (handle_error(buf, NULL));
+		if (!(tmp = ft_strnjoin(save[fd], buf, buf_cnt)))
+			return (handle_error(buf, save[fd])); 
 		free(save[fd]);
 		save[fd] = tmp;
 		if (newline_index(save[fd]) != -1)
